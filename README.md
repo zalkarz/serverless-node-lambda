@@ -92,9 +92,6 @@ This boilerplate contains following plugins for local development:
 serverless deploy --stage ${dev or prod}
 ```
 
-![Screen Shot 2022-03-16 at 17 28 14](https://user-images.githubusercontent.com/60592954/158582343-fbbc68fd-3ad3-4fcd-ba0f-2416fee42033.png)
-
-
 ### Deploy a function 
 
 ```bash
