@@ -1,0 +1,12 @@
+  # SNS API Endpoints
+  snsTypes:
+    handler: modules/sns/endpoints/read.list
+    memorySize: 128
+    timeout: 30
+    events:
+      - http:
+          path: user/sns
+          method: get
+          integration: lambda
+          # Requires clients to add API keys values in the `x-api-key` header of their request
+          # private: true

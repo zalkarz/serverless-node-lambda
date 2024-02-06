@@ -1,0 +1,11 @@
+{
+  "RDS_DATABASE": "",
+  "RDS_HOSTNAME": "",
+  "RDS_PASSWORD": "",
+  "RDS_USERNAME": "",
+  "SECURITY_GROUP_ID": "",
+  "SUBNET1_ID": "",
+  "SUBNET2_ID": "",
+  "EXECUTION_ROLE": "",
+  "DEPLOYMENT_ROLE": ""
+}

@@ -1,0 +1,11 @@
+# package directories
+node_modules
+jspm_packages
+.vscode
+.serverless
+.tmp
+.idea
+.DS_Store
+
+# Serverless directories
+.serverless

@@ -1,0 +1,67 @@
+frameworkVersion: ">=3.1.0"
+
+service: NODE-LAMBDA
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage, 'dev'}
+  region: eu-central-1.api.aws
+  timeout: 30 #Default Lambda timeout 
+  memorySize: 128 #Default Lambda Memory Size
+  versionFunctions: false # No functions versioning 
+  
+  # Instruct Serverless to use an existing IAM role for all Lambda functions
+  iam: 
+    role: ${self:custom.secrets.EXECUTION_ROLE}
+    #deploymentRole: ${self:custom.secrets.DEPLOYMENT_ROLE}
+        
+  #Global Environment variables
+  environment: 
+    RDS_DATABASE: ${self:custom.secrets.RDS_DATABASE}
+    RDS_HOSTNAME: ${self:custom.secrets.RDS_HOSTNAME}
+    RDS_PASSWORD: ${self:custom.secrets.RDS_PASSWORD}
+    RDS_USERNAME: ${self:custom.secrets.RDS_USERNAME}
+      
+  # If you use VPC then both securityGroupIds and subnetIds are required
+  vpc:
+    securityGroupIds:
+      - ${self:custom.secrets.SECURITY_GROUP_ID}
+    subnetIds:
+      - ${self:custom.secrets.SUBNET1_ID}
+      - ${self:custom.secrets.SUBNET2_ID}
+
+package:
+  individually: true
+  excludeDevDependencies: true
+  patterns:
+    - '!.git/**'
+    - '!.vscode/**'
+    - '!.idea/**'
+
+# Custom variables
+custom:
+  secrets: ${file(./configs/${self:provider.stage}.json)}
+  webpack:
+    includeModules: true # enable auto-packing of external modules
+
+  serverless-offline:
+    host: '0.0.0.0'
+
+  splitStacks:
+    perFunction: true
+    perType: true
+  
+  prune:
+    automatic: true
+    number: 3
+    
+plugins:
+  - serverless-webpack
+  - serverless-offline
+  - serverless-prune-plugin
+
+functions: ${file(serverless-dynamic.js)}
+
+# Infrastrucure - Cloud Formation
+resources:  # CloudFormation template syntax

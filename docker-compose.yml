@@ -1,0 +1,22 @@
+version: "3"
+services:
+  # sqs:
+  #   image: s12v/elasticmq:latest
+  #   ports:
+  #     - "9324:9324"
+  #   networks:
+  #     - developer
+      
+  serverless:
+    build: .
+    volumes:
+      - "./:/app"
+    ports:
+      - "3000:3000"
+    # depends_on:
+    #   - sqs
+    networks:
+      - developer
+
+networks:
+  developer:
